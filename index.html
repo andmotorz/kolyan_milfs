@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Николай — Ищу милфу с деньгами</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #1a0033 0%, #330066 50%, #000 100%);
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .glow {
+    position: fixed;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.5;
+    z-index: 0;
+  }
+  .glow1 { background: #ff00aa; top: -100px; left: -100px; }
+  .glow2 { background: #00ffe1; bottom: -100px; right: -100px; }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(255, 0, 170, 0.15);
+    border: 1px solid #ff00aa;
+    color: #ff66cc;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,0,170,0.4); }
+    50% { box-shadow: 0 0 20px 5px rgba(255,0,170,0.2); }
+  }
+  h1 {
+    font-size: clamp(32px, 7vw, 64px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #fff, #ff66cc, #00ffe1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+  }
+  .subtitle {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: #bbb;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    line-height: 1.5;
+  }
+  .subtitle strong { color: #00ffe1; }
+
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-size: 32px;
+    font-weight: 900;
+    color: #ff66cc;
+  }
+  .stat-label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Card */
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 40px;
+    backdrop-filter: blur(20px);
+    margin-top: 40px;
+  }
+  .card h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  .card p.desc { color: #999; font-size: 14px; margin-bottom: 24px; }
+
+  form { display: flex; flex-direction: column; gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  label { font-size: 13px; color: #aaa; font-weight: 600; }
+  input, select, textarea {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: #fff;
+    font-size: 15px;
+    font-family: inherit;
+    transition: border 0.2s, box-shadow 0.2s;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #ff00aa;
+    box-shadow: 0 0 0 3px rgba(255,0,170,0.2);
+  }
+  textarea { resize: vertical; min-height: 90px; }
+  select option { background: #1a0033; }
+
+  button {
+    background: linear-gradient(90deg, #ff00aa, #ff66cc);
+    color: #fff;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-top: 8px;
+  }
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255,0,170,0.4);
+  }
+  button:active { transform: translateY(0); }
+
+  .footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: #555;
+    font-size: 13px;
+  }
+  .footer span { color: #ff66cc; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #00ffe1;
+    color: #000;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    opacity: 0;
+    transition: all 0.4s;
+    z-index: 100;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  @media (max-width: 600px) {
+    .card { padding: 24px; }
+    .stats { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+  <div class="glow glow1"></div>
+  <div class="glow glow2"></div>
+
+  <div class="container">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="badge">🔥 Тунеядец с амбициями</div>
+      <h1>Николай ищет<br>милфу с деньгами</h1>
+      <p class="subtitle">
+        Не работаю. Не хочу. Но <strong>деньги — в трусы</strong>.
+        Если ты — успешная женщина 30+, готовая содержать молодого,
+        амбициозного и абсолютно бесполезного мужчину — тебе сюда.
+      </p>
+      <div class="stats">
+        <div class="stat"><div class="stat-num">0</div><div class="stat-label">Дней работы</div></div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Тунеядец</div></div>
+        <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Хотелок</div></div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="card">
+      <h2>💌 Оставить заявку</h2>
+      <p class="desc">Заполни форму — заявка прилетит Николаю прямо в Telegram. Деньги — на карту. Трусы — по желанию.</p>
+
+      <form id="form">
+        <div class="field">
+          <label>Твоё имя</label>
+          <input type="text" name="name" placeholder="Например, Елена Прекрасная" required>
+        </div>
+        <div class="field">
+          <label>Возраст</label>
+          <input type="number" name="age" placeholder="30+" min="25" max="99" required>
+        </div>
+        <div class="field">
+          <label>Бюджет на содержание (₽/мес)</label>
+          <select name="budget" required>
+            <option value="">Выбери сумму</option>
+            <option value="50k">50 000 — на пиво и чипсы</option>
+            <option value="100k">100 000 — на пиво, чипсы и новые трусы</option>
+            <option value="250k">250 000 — на нормальную жизнь</option>
+            <option value="500k">500 000 — Николай подумает</option>
+            <option value="1m">1 000 000+ — женюсь, честно</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Почему именно ты?</label>
+          <textarea name="message" placeholder="Опиши, чем ты готова удивить тунеядца..." required></textarea>
+        </div>
+        <div class="field">
+          <label>Telegram / телефон для связи</label>
+          <input type="text" name="contact" placeholder="@username или +7..." required>
+        </div>
+        <button type="submit">Отправить заявку 🚀</button>
+      </form>
+    </div>
+
+    <div class="footer">
+      Сделано с <span>♥</span> для Коляна. Все совпадения случайны. Деньги не возвращаются.
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Заявка улетела! Жди звонка 💸</div>
+
+<script>
+  // ==== НАСТРОЙКА TELEGRAM ====
+  // 1. Создай бота через @BotFather → получи токен
+  // 2. Узнай свой chat_id через @userinfobot
+  // 3. Вставь сюда:
+  const BOT_TOKEN = 'ВСТАВЬ_ТОКЕН_БОТА';
+  const CHAT_ID = 'ВСТАВЬ_CHAT_ID';
+  // ============================
+
+  const form = document.getElementById('form');
+  const toast = document.getElementById('toast');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const text = `
+🔥 НОВАЯ ЗАЯВКА НА МИЛФУ 🔥
+
+👩 Имя: ${data.get('name')}
+🎂 Возраст: ${data.get('age')}
+💰 Бюджет: ${data.get('budget')}
+📱 Контакт: ${data.get('contact')}
+💬 Сообщение: ${data.get('message')}
+    `;
+
+    try {
+      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: text,
+          parse_mode: 'HTML'
+        })
+      });
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+      form.reset();
+    } catch (err) {
+      alert('Ошибка отправки. Проверь настройки бота.');
+    }
+  });
+</script>
+</body>
+</html>
